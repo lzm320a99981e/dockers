@@ -1,0 +1,14 @@
+version: '3'
+services:
+  nexus:
+    image: sonatype/nexus3
+    container_name: 'nexus'
+    restart: always
+    networks:
+      - c001
+    volumes:
+      - './nexus-data:/nexus-data'
+
+networks:
+  c001:
+    external: true

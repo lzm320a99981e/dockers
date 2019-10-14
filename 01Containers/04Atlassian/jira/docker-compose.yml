@@ -1,0 +1,25 @@
+#  docker volume create customized-atlassian-jira
+version: '3'
+
+# services
+services:
+  jira:
+    container_name: 'customized-atlassian-jira'
+    restart: always
+    image: customized-atlassian-jira
+    ports:
+      - '8001:8080'
+    volumes:
+      - v:/var/atlassian/jira
+
+# networks
+networks:
+  default:
+    external:
+      name: customized-atlassian
+
+# volumes
+volumes:
+  v:
+    external:
+      name: 'customized-atlassian-jira'

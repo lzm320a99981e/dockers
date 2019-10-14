@@ -1,0 +1,22 @@
+version: '3'
+
+# services
+services:
+  mysql:
+    container_name: 'customized-atlassian-mysql'
+    restart: always
+    image: customized-atlassian-mysql
+    volumes:
+      - v:/var/lib/mysql
+
+# networks
+networks:
+  default:
+    external:
+      name: customized-atlassian
+
+# volumes
+volumes:
+  v:
+    external:
+      name: 'customized-atlassian-mysql'

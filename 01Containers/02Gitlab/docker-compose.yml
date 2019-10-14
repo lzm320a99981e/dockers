@@ -1,0 +1,19 @@
+version: '3'
+services:
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    hostname: 'gitlab.services.com'
+    container_name: gitlab
+    restart: always
+    ports:
+      - '22:22'
+    networks:
+      - c001
+    volumes:
+      - './config:/etc/gitlab'
+      - './logs:/var/log/gitlab'
+      - './data:/var/opt/gitlab'
+
+networks:
+  c001:
+    external: true
