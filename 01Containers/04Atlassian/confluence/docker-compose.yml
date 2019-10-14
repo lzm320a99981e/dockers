@@ -9,7 +9,7 @@ services:
     ports:
       - '8002:8090'
     volumes:
-      - v:/var/atlassian/confluence
+      - './confluence:/var/atlassian/confluence'
 
 # networks
 networks:

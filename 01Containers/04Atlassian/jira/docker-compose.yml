@@ -11,6 +11,7 @@ services:
       - '8001:8080'
     volumes:
       - v:/var/atlassian/jira
+      - './jira:/var/atlassian/jira'
 
 # networks
 networks:
