@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-
 # 停止容器
-docker stop $(docker ps -f name=customized -q)
+docker stop $(docker ps | grep customized | awk '{print $1}')
 
 # 删除容器
-docker rm $(docker ps -f name=customized -q)
+docker rm $(docker container ls -a | grep customized | awk '{print $1}')
 
 # 删除容器镜像
 docker rmi $(docker images | grep customized | awk '{print $3}')
