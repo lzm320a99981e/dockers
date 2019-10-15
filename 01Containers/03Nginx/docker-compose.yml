@@ -4,8 +4,8 @@ services:
     image: nginx
     container_name: 'customized-nginx'
     external_links:
-      - nexus
-      - gitlab
+      - 'customized-nexus:nexus'
+      - 'customized-gitlab:gitlab'
       - 'customized-atlassian-confluence:confluence'
       - 'customized-atlassian-jira:jira'
     networks:
