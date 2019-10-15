@@ -1,0 +1,17 @@
+version: '3'
+
+# services
+services:
+  mysql:
+    container_name: 'customized-mysql'
+    restart: always
+    image: customized-mysql
+    volumes:
+      - './mysql:/var/lib/mysql'
+    ports:
+      - '3306:3306'
+# networks
+networks:
+  default:
+    external:
+      name: c002
