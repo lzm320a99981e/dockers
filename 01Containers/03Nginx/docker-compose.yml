@@ -9,7 +9,7 @@ services:
       - 'customized-atlassian-confluence:confluence'
       - 'customized-atlassian-jira:jira'
     networks:
-      - c001
+      - default
       - c101
     ports:
       - '80:80'
