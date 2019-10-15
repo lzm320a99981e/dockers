@@ -3,7 +3,7 @@ services:
   gitlab:
     image: 'gitlab/gitlab-ce:latest'
     hostname: 'gitlab.local.com'
-    container_name: gitlab
+    container_name: 'customized-gitlab'
     restart: always
     environment:
       GITLAB_OMNIBUS_CONFIG: |
