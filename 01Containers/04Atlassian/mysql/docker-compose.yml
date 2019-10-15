@@ -7,16 +7,10 @@ services:
     restart: always
     image: customized-atlassian-mysql
     volumes:
-      - v:/var/lib/mysql
+      - './mysql:/var/lib/mysql'
 
 # networks
 networks:
   default:
     external:
-      name: customized-atlassian
-
-# volumes
-volumes:
-  v:
-    external:
-      name: 'customized-atlassian-mysql'
+      name: c101

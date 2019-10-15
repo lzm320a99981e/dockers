@@ -6,8 +6,6 @@ services:
     container_name: 'customized-atlassian-confluence'
     restart: always
     image: customized-atlassian-confluence
-    ports:
-      - '8002:8090'
     volumes:
       - './confluence:/var/atlassian/confluence'
 
@@ -15,10 +13,4 @@ services:
 networks:
   default:
     external:
-      name: customized-atlassian
-
-# volumes
-volumes:
-  v:
-    external:
-      name: 'customized-atlassian-confluence'
+      name: c101
