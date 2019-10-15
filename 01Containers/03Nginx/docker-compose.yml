@@ -6,6 +6,8 @@ services:
     external_links:
       - nexus
       - gitlab
+      - 'customized-atlassian-confluence:confluence'
+      - 'customized-atlassian-jira:jira'
     networks:
       - c001
       - c101

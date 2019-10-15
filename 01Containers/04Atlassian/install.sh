@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
-# 拉取基础镜像
-docker pull cptactionhank/atlassian-jira-software
-docker pull cptactionhank/atlassian-confluence
-docker pull mysql:5.7
-# 创建共享网络
-docker network create c101
+v_dir_current=$(cd `dirname $0`; pwd)
+
+cd ${v_dir_current}/mysql
+./install.sh
+
+cd ${v_dir_current}/jira
+./install.sh
+
+cd ${v_dir_current}/confluence
+./install.sh

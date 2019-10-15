@@ -6,8 +6,6 @@ services:
     container_name: 'customized-atlassian-jira'
     restart: always
     image: customized-atlassian-jira
-    ports:
-      - '8001:8080'
     volumes:
       - './jira:/var/atlassian/jira'
 

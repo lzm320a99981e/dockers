@@ -2,7 +2,7 @@ version: '3'
 services:
   gitlab:
     image: 'gitlab/gitlab-ce:latest'
-    hostname: 'gitlab.services.com'
+    hostname: 'gitlab.local.com'
     container_name: gitlab
     restart: always
     ports:
