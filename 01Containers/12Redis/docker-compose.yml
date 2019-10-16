@@ -6,8 +6,10 @@ services:
     image: redis
     restart: always
     container_name: 'customized-redis'
+    command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
       - './data:/data'
+      - './redis.conf:/usr/local/etc/redis/redis.conf'
     ports:
       - '16379:6379'
 # networks
