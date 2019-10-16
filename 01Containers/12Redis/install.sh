@@ -8,7 +8,8 @@ wget http://download.redis.io/redis-stable/redis.conf -O redis.conf
 
 # 修改配置
 sed -i 's/logfile ""/logfile "access.log"/' redis.conf
-sed -i 's/protected-mode yes/protected-mode no/' redis.conf
 sed -i 's/appendonly no/appendonly yes/' redis.conf
+sed -i 's/protected-mode yes/protected-mode no/' redis.conf
+sed -i 's/bind 127.0.0.1/# bind 127.0.0.1/' redis.conf
 
 docker-compose up -d
