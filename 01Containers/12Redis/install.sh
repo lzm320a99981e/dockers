@@ -3,8 +3,11 @@
 v_dir_current=$(cd `dirname $0`; pwd)
 cd ${v_dir_current}/
 
-# 下载配置模板(wget https://raw.githubusercontent.com/antirez/redis/5.0.6/redis.conf -O redis.conf)
-wget http://download.redis.io/redis-stable/redis.conf -O redis.conf
+if [[ ! -f "$v_dir_current/redis.conf" ]]; then
+    # 下载配置模板(wget https://raw.githubusercontent.com/antirez/redis/5.0.6/redis.conf -O redis.conf)
+    echo "download redis.conf -> http://download.redis.io/redis-stable/redis.conf"
+    wget http://download.redis.io/redis-stable/redis.conf -O redis.conf
+fi
 
 # 修改配置
 sed -i 's/logfile ""/logfile "access.log"/' redis.conf
