@@ -133,4 +133,4 @@ docker_compose_install(){
 
 # network_config "/etc/sysconfig/network-scripts/ifcfg-ens33" "192.168.31.21"
 
-# /Applications/Lantern.app/Contents/MacOS/lantern -addr 192.168.31.163:8787
+# nohup /Applications/Lantern.app/Contents/MacOS/lantern -addr 192.168.31.163:8787 &
