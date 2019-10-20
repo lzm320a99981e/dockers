@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+############################################################
+#  docker 常用软件：https://github.com/vimagick/dockerfiles
+#
+#
+#
+#
+############################################################
+
 v_dir_current=$(cd $(dirname $0);pwd)
 echo "************************** 当前目录($v_dir_current) **************************"
 
@@ -70,7 +78,7 @@ selinux_disable(){
 docker_remove(){
     echo "************************** docker 卸载 **************************"
     systemctl stop docker
-    sudo yum -y remove docker \
+    sudo yum remove docker \
                       docker-client \
                       docker-client-latest \
                       docker-common \
@@ -80,16 +88,23 @@ docker_remove(){
                       docker-selinux \
                       docker-engine-selinux \
                       docker-engine
+    rm -fr /var/lib/docker/
 }
 # 安装docker
 docker_install(){
     # 卸载
     docker_remove
     echo "************************** docker 安装 **************************"
-    # 安装
-    sudo yum install -y yum-utils device-mapper-persistent-data lvm2
-    sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-    sudo yum install -y docker-ce
+    # 官方安装（比较慢）
+#    sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+#    sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+#    sudo yum install -y docker-ce
+
+    # 极速安装（快）
+    curl -sSL https://get.daocloud.io/docker | sh
+    # 添加国内镜像仓库
+    curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io
+
     systemctl start docker
     echo "************************** docker version -> $(docker -v) **************************"
 }
@@ -97,9 +112,12 @@ docker_install(){
 # 安装docker-compose
 docker_compose_install(){
     echo "************************** docker-compose 安装 **************************"
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    # 官方安装（比较慢）
+#    sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    # 极速安装安装（快）
+    sudo curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
-    sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+    sudo ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
     echo "************************** docker-compose version -> $(docker-compose -v) **************************"
 }
 
@@ -110,6 +128,7 @@ docker_compose_install(){
 # yum_update
 # selinux_disable
 
+# docker run -it --rm -v /usr/local/share/pdf2htmlEX/pdf:/pdf bwits/pdf2htmlex pdf2htmlEX 13b9f949-36b5-42f6-846a-4e2df35b8f9c.PDF
 
 
 # network_config "/etc/sysconfig/network-scripts/ifcfg-ens33" "192.168.31.21"
