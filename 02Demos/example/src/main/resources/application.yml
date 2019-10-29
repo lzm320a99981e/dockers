@@ -1,11 +1,24 @@
 server:
   port: 8888
+
+
+#spring:
+#  data:
+#    elasticsearch:
+#      cluster-name: docker-cluster
+#      cluster-nodes: '192.168.0.31:9200'
+#      properties:
+#        xpack.security.user: elastic:elastic
+#      repositories:
+#        enabled: true
+#  elasticsearch:
+#    rest:
+
+#      uris:
+
 spring:
-  data:
-    elasticsearch:
-      cluster-name: docker-cluster
-      cluster-nodes: '192.168.0.31:9200'
-      properties:
-        xpack.security.user: elastic:elastic
-      repositories:
-        enabled: true
+  elasticsearch:
+    rest:
+      uris: 'http://192.168.0.31:9200'
+      username: elastic
+      password: elastic
