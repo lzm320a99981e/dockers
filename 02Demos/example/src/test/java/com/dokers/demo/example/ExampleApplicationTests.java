@@ -10,4 +10,11 @@ class ExampleApplicationTests {
     void contextLoads() {
     }
 
+//    @Autowired
+//    private EsUserRepository esUserRepository;
+
+    @Test
+    void test() {
+//        System.out.println(esUserRepository);
+    }
 }

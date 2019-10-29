@@ -121,15 +121,13 @@ docker_compose_install(){
     echo "************************** docker-compose version -> $(docker-compose -v) **************************"
 }
 
-#docker_install
-#docker_compose_install
+yum_update
+selinux_disable
 
-
-# yum_update
-# selinux_disable
+docker_install
+docker_compose_install
 
 # docker run -it --rm -v /usr/local/share/pdf2htmlEX/pdf:/pdf bwits/pdf2htmlex pdf2htmlEX 13b9f949-36b5-42f6-846a-4e2df35b8f9c.PDF
-
 
 # network_config "/etc/sysconfig/network-scripts/ifcfg-ens33" "192.168.31.21"
 
