@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EsUserRepository extends ElasticsearchRepository<User, String> {
     Page<User> findUserByUsername(String username, Pageable pageable);
+
+    Iterable<User> findByUsernameIsLikeOrEmailIsLike(String username, String email);
 }

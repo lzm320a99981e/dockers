@@ -6,6 +6,9 @@ import com.dokers.demo.example.repository.EsUserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 @SpringBootTest
 class ExampleApplicationTests {
@@ -24,8 +27,13 @@ class ExampleApplicationTests {
 
     @Test
     void testQuery() {
-        System.out.println(esUserRepository.findAll());
-//        final Page<User> page = esUserRepository.findUserByUsername("zhang", PageRequest.of(0, 10));
-//        System.out.println(JSON.toJSONString(page.get().collect(Collectors.toList()), true));
+        final List<User> users = esUserRepository.findUserByUsername("zhangsan", PageRequest.of(0, 5)).getContent();
+        System.out.println(JSON.toJSONString(users, true));
+    }
+
+    @Test
+    void testQuery1() {
+        final Iterable<User> users = esUserRepository.findByUsernameIsLikeOrEmailIsLike("gs", "1");
+        System.out.println(JSON.toJSONString(users, true));
     }
 }
