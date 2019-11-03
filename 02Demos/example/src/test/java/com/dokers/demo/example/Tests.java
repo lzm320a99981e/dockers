@@ -12,8 +12,11 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Tests {
 
@@ -65,6 +68,44 @@ public class Tests {
         System.out.println(JSON.toJSONString(videos, true));
     }
 
+    @Test
+    void testExtractVideos() {
+        final String baseUrl = "https://www.example.com";
+        final String urlTemplate = "https://www.example.com/video?c=111&page=%s";
+        List<Video> videos = IntStream.range(21, 50).mapToObj(page -> extractVideos(String.format(urlTemplate, page))).flatMap(Collection::stream).sorted(Comparator.comparing(Video::getViewCount).reversed()).collect(Collectors.toList());
+        String urls = "youtube-dl " + videos.subList(0, 50).stream().map(item -> baseUrl + item.getUrl()).collect(Collectors.joining(" "));
+        System.out.println(urls);
+    }
+
+    static List<Video> extractVideos(String url) {
+        Element body;
+        try {
+            body = Jsoup.connect(url).execute().parse().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return body.select("ul#videoCategory>li.videoBox").stream().map(item -> {
+            String id = item.attr("id");
+            String vkey = item.attr("_vkey");
+            Elements a = item.select("div.phimage a");
+            String href = a.attr("href");
+            String title = a.attr("title");
+            String duration = item.select("div.phimage var.duration").text();
+            String views = item.select("span.views var").text();
+            int rating = Integer.parseInt(item.select("div.rating-container div.value").text().replace("%", ""));
+            String added = item.select("var.added").text();
+
+            return Video.builder().id(id).vkey(vkey).url(href).title(title).duration(duration).views(views).rating(rating).added(added).build();
+        }).collect(Collectors.toList());
+    }
+
+    @Test
+    void testUrl() {
+        String url = "https://www.example.com/video?c=111";
+        String baseUrl = url.substring(0, url.indexOf("/video"));
+        System.out.println(baseUrl);
+    }
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -95,5 +136,18 @@ public class Tests {
         private String vkey;
         private String imgUrl;
         private String duration;
+
+        public int getTime() {
+            String[] minutesAndSecond = duration.split(":");
+            return Integer.valueOf(minutesAndSecond[0]) * 60 + Integer.valueOf(minutesAndSecond[1]);
+
+        }
+
+        public int getViewCount() {
+            double quantity = Double.valueOf(views.substring(0, views.length() - 1));
+            String unit = views.substring(views.length() - 1);
+            return (int) (unit.equalsIgnoreCase("K") ? quantity * 1000 : quantity * 1000 * 1000);
+
+        }
     }
 }
